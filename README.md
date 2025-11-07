@@ -21,9 +21,9 @@ patch/
 
 ## Dependencies
 
-- Spring Boot 3.2.0
+- Spring Boot 3.5.3
 - Picocli 4.7.5 with Spring Boot integration
-- Spring AI 1.0.0-M3 (ready for integration)
+- Spring AI 1.0.1 (ready for integration)
 - Java 21
 
 ## Building
@@ -66,42 +66,6 @@ Patch CLI application with Spring Boot and AI integration
   -v, --verbose      Enable verbose output
   -V, --version      Print version information and exit.
 ```
-
-## Spring AI Integration
-
-To enable Spring AI features:
-
-1. Add your AI provider dependency (e.g., OpenAI, Azure OpenAI, etc.)
-2. Configure your API keys in `application.properties`
-3. Implement the TODO methods in `AiService.java`
-
-### Example OpenAI Configuration
-
-Add to `patch-cli/pom.xml`:
-```xml
-<dependency>
-    <groupId>org.springframework.ai</groupId>
-    <artifactId>spring-ai-openai-spring-boot-starter</artifactId>
-</dependency>
-```
-
-Update `application.properties`:
-```properties
-spring.ai.openai.api-key=${OPENAI_API_KEY}
-spring.ai.openai.chat.options.model=gpt-4
-```
-
-## Architecture
-
-- **PatchApplication**: Main Spring Boot application with CLI runner
-- **PatchCommand**: Picocli command with Spring dependency injection
-- **PatchService**: Business logic service
-- **AiService**: AI integration service (ready for Spring AI)
-- **PicocliConfig**: Configuration for Picocli-Spring integration
-
-## Adding Commands
-
-To add new CLI commands, create classes annotated with `@Command` and register them as Spring components. Picocli will automatically discover and wire them through the Spring context.
 
 ## Development
 

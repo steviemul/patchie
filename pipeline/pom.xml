@@ -10,13 +10,26 @@
   </parent>
 
   <groupId>io.steviemul.patch</groupId>
-  <artifactId>generator</artifactId>
+  <artifactId>pipeline</artifactId>
 
   <dependencies>
 
     <dependency>
-      <groupId>org.springframework.ai</groupId>
-      <artifactId>spring-ai-ollama</artifactId>
+      <groupId>io.steviemul.patch</groupId>
+      <artifactId>parser</artifactId>
+      <version>${project.parent.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>io.steviemul.patch</groupId>
+      <artifactId>resolver</artifactId>
+      <version>${project.parent.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>io.steviemul.patch</groupId>
+      <artifactId>generator</artifactId>
+      <version>${project.parent.version}</version>
     </dependency>
 
   </dependencies>

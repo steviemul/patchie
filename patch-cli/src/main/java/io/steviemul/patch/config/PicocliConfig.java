@@ -4,5 +4,5 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class PicocliConfig {
-    // Configuration will be handled by picocli-spring-boot-starter auto-configuration
+  // Configuration will be handled by picocli-spring-boot-starter auto-configuration
 }

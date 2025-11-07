@@ -36,7 +36,11 @@
       <version>${picocli.version}</version>
     </dependency>
 
-    <!-- Spring AI will be added later when needed -->
+    <dependency>
+      <groupId>io.steviemul.patch</groupId>
+      <artifactId>pipeline</artifactId>
+      <version>${project.parent.version}</version>
+    </dependency>
 
     <!-- Test dependencies -->
     <dependency>

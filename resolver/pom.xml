@@ -10,15 +10,10 @@
   </parent>
 
   <groupId>io.steviemul.patch</groupId>
-  <artifactId>generator</artifactId>
+  <artifactId>resolver</artifactId>
 
-  <dependencies>
+  <properties>
 
-    <dependency>
-      <groupId>org.springframework.ai</groupId>
-      <artifactId>spring-ai-ollama</artifactId>
-    </dependency>
-
-  </dependencies>
+  </properties>
 
 </project>
