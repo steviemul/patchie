@@ -1,7 +1,7 @@
-package io.steviemul.patch.generator;
+package io.steviemul.patchie.generator;
 
-import io.steviemul.patch.context.AggregatedContext;
-import io.steviemul.patch.context.ContextProvider;
+import io.steviemul.patchie.context.AggregatedContext;
+import io.steviemul.patchie.context.ContextProvider;
 import org.springframework.stereotype.Service;
 
 @Service

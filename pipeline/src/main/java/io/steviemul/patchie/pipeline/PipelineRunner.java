@@ -1,9 +1,9 @@
-package io.steviemul.patch.pipeline;
+package io.steviemul.patchie.pipeline;
 
-import io.steviemul.patch.context.AggregatedContext;
-import io.steviemul.patch.generator.PatchContextProvider;
-import io.steviemul.patch.parser.SarifContextProvider;
-import io.steviemul.patch.resolver.CodeContextProvider;
+import io.steviemul.patchie.context.AggregatedContext;
+import io.steviemul.patchie.generator.PatchContextProvider;
+import io.steviemul.patchie.parser.SarifContextProvider;
+import io.steviemul.patchie.resolver.CodeContextProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

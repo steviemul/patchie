@@ -1,6 +1,6 @@
-package io.steviemul.patch.commands;
+package io.steviemul.patchie.commands;
 
-import io.steviemul.patch.pipeline.PipelineRunner;
+import io.steviemul.patchie.pipeline.PipelineRunner;
 import org.springframework.stereotype.Component;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
@@ -14,6 +14,8 @@ import java.util.concurrent.Callable;
     mixinStandardHelpOptions = true,
     version = "1.0")
 public class PatchCommand implements Callable<Integer> {
+
+  private final PipelineRunner runner;
 
   @Option(
       names = {"-v", "--verbose"},
@@ -35,16 +37,14 @@ public class PatchCommand implements Callable<Integer> {
       description = "Location to output patches to")
   private String output;
 
+  public PatchCommand(PipelineRunner runner) {
+    this.runner = runner;
+  }
+
   @Override
   public Integer call() {
 
-    PipelineRunner runner = PipelineRunner.builder()
-        .resultsLocation(resultsFile)
-        .sourceCodeRoot(root)
-        .outputLocation(output)
-        .build();
-
-    runner.run();
+    runner.run(resultsFile, root, output);
 
     return 0;
   }

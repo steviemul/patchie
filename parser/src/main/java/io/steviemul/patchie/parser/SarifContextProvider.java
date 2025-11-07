@@ -1,6 +1,6 @@
-package io.steviemul.patch.parser;
+package io.steviemul.patchie.parser;
 
-import io.steviemul.patch.context.AggregatedContext;
+import io.steviemul.patchie.context.AggregatedContext;
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 

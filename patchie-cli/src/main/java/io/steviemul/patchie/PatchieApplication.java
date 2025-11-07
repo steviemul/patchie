@@ -1,6 +1,6 @@
-package io.steviemul.patch;
+package io.steviemul.patchie;
 
-import io.steviemul.patch.commands.PatchCommand;
+import io.steviemul.patchie.commands.PatchCommand;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.ExitCodeGenerator;
 import org.springframework.boot.SpringApplication;
@@ -9,19 +9,19 @@ import picocli.CommandLine;
 import picocli.CommandLine.IFactory;
 
 @SpringBootApplication
-public class PatchApplication implements CommandLineRunner, ExitCodeGenerator {
+public class PatchieApplication implements CommandLineRunner, ExitCodeGenerator {
 
   private final IFactory factory;
   private final PatchCommand patchCommand;
   private int exitCode;
 
-  public PatchApplication(IFactory factory, PatchCommand patchCommand) {
+  public PatchieApplication(IFactory factory, PatchCommand patchCommand) {
     this.factory = factory;
     this.patchCommand = patchCommand;
   }
 
   public static void main(String[] args) {
-    System.exit(SpringApplication.exit(SpringApplication.run(PatchApplication.class, args)));
+    System.exit(SpringApplication.exit(SpringApplication.run(PatchieApplication.class, args)));
   }
 
   @Override

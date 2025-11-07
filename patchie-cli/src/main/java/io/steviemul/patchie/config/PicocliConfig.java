@@ -1,4 +1,4 @@
-package io.steviemul.patch.config;
+package io.steviemul.patchie.config;
 
 import org.springframework.context.annotation.Configuration;
 

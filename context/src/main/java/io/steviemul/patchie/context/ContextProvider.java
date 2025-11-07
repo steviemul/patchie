@@ -1,4 +1,4 @@
-package io.steviemul.patch.context;
+package io.steviemul.patchie.context;
 
 public interface ContextProvider {
   AggregatedContext addContext(AggregatedContext aggregatedContext);

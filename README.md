@@ -1,4 +1,4 @@
-# Patch CLI Application
+# Patchie CLI Application
 
 A Spring Boot CLI application using Picocli for command-line interface and Spring AI integration.
 

@@ -1,7 +1,7 @@
-package io.steviemul.patch.resolver;
+package io.steviemul.patchie.resolver;
 
-import io.steviemul.patch.context.AggregatedContext;
-import io.steviemul.patch.context.ContextProvider;
+import io.steviemul.patchie.context.AggregatedContext;
+import io.steviemul.patchie.context.ContextProvider;
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 
