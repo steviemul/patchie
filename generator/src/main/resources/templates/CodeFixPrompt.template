@@ -1,0 +1,23 @@
+You are a secure code assistant.
+
+A SARIF scan found a security issue in a Java file.
+
+Rule ID: {ruleId}
+Message: {message}
+
+Code Context:
+```
+{code}
+```
+
+Specific Code Snippet where the issue was found:
+```
+{snippet}
+```
+
+Please provide a minimal git patch that fixes the issue.
+Format your response strictly as:
+```
+diff --git a/{file} b/{file}
+...
+```
