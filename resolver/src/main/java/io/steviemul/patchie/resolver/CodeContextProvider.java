@@ -39,6 +39,11 @@ public class CodeContextProvider implements ContextProvider {
       if (Files.exists(sourceCodePath)) {
         List<String> lines = Files.readAllLines(sourceCodePath, StandardCharsets.UTF_8);
 
+        log.info(
+            "Adding source code context for file at line : [{}, {}]",
+            resultLocation.getFile(),
+            resultLocation.getStartLine());
+
         return getLines(lines, resultLocation.getStartLine(), resultLocation.getEndLine());
       } else {
         log.error("Source code not found: {}", sourceCodePath);

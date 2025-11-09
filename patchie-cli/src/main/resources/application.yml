@@ -4,8 +4,8 @@ spring:
     banner-mode: off
   ai:
     chat:
-      model: ${CHAT_MODEL:llama3.2}
-      base-url: ${CHAT_BASE_URL:http://localhost:11434}
+      model: ${PATCHIE_CHAT_MODEL:qwen2.5-coder:7b}
+      base-url: ${PATCHIE_CHAT_BASE_URL:http://localhost:11434}
 
 logging:
   pattern:

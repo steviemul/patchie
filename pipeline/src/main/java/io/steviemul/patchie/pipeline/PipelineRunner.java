@@ -1,13 +1,13 @@
 package io.steviemul.patchie.pipeline;
 
 import io.steviemul.patchie.context.AggregatedContext;
-import io.steviemul.patchie.generator.PatchContextProvider;
+import io.steviemul.patchie.generator.PatchGenerator;
 import io.steviemul.patchie.parser.SarifContextProvider;
 import io.steviemul.patchie.resolver.CodeContextProvider;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.List;
+import java.util.Optional;
+import java.util.concurrent.Future;
+import java.util.stream.Stream;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -17,39 +17,54 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class PipelineRunner {
 
-  private final PatchContextProvider patchContextProvider;
+  private final PatchGenerator patchGenerator;
 
-  public void run(String resultsLocation, String sourceCodeRoot, String outputLocation) {
+  public void run(PipelineConfig config) {
+
+    log.info("Reading results file {}", config.getResultsFile());
 
     SarifContextProvider sarifContextProvider =
-        SarifContextProvider.builder().resultsLocation(resultsLocation).build();
+        SarifContextProvider.builder().resultsLocation(config.getResultsFile()).build();
 
     List<AggregatedContext> context = sarifContextProvider.getInitialContext();
 
+    log.info("Found {} issues", context.size());
+
     CodeContextProvider codeContextProvider =
-        CodeContextProvider.builder().sourceCodeRoot(sourceCodeRoot).build();
+        CodeContextProvider.builder().sourceCodeRoot(config.getRoot()).build();
 
     context = context.stream().map(codeContextProvider::addContext).toList();
 
-    context = context.stream().limit(1).map(patchContextProvider::addContext).toList();
+    Stream<AggregatedContext> patchContextStream =
+        context.stream().filter(c -> c.getCode() != null);
 
-    context.stream().filter(c -> c.getPatch() != null).forEach(c -> outputPatch(c, outputLocation));
-  }
-
-  private void outputPatch(AggregatedContext context, String outputLocation) {
-
-    Path patchFile = Path.of(outputLocation, "test.patch");
+    if (config.getMaximumPatches() > 0) {
+      patchContextStream = patchContextStream.limit(config.getMaximumPatches());
+    }
 
     try {
-      if (patchFile.getParent().toFile().mkdirs()) {
-        log.info("Created patch output folder {}", patchFile.getParent());
-      }
+      List<Future<AggregatedContext>> futures =
+          patchContextStream
+              .map(c -> patchGenerator.generatePatch(c, config.getOutputLocation()))
+              .toList();
 
-      Files.writeString(patchFile, context.getPatch(), StandardCharsets.UTF_8);
+      List<AggregatedContext> results =
+          futures.stream().map(this::getContext).flatMap(Optional::stream).toList();
 
-      log.info("Created patch output file {}", patchFile);
+      log.info("Generated {} issues", results.size());
     } catch (Exception e) {
-      log.error("Unable to create patch file", e);
+      log.error("Error retrieving results", e);
     }
+  }
+
+  private Optional<AggregatedContext> getContext(Future<AggregatedContext> future) {
+
+    try {
+      return Optional.of(future.get());
+    } catch (Exception e) {
+      log.error("Error retrieving result", e);
+    }
+
+    return Optional.empty();
   }
 }

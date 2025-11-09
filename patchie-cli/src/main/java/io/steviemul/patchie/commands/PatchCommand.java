@@ -1,5 +1,6 @@
 package io.steviemul.patchie.commands;
 
+import io.steviemul.patchie.pipeline.PipelineConfig;
 import io.steviemul.patchie.pipeline.PipelineRunner;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -45,6 +46,11 @@ public class PatchCommand implements Callable<Integer> {
       description = "Location to output patches to, defaults to patches directory")
   private String output;
 
+  @Option(
+      names = {"-l", "--limit"},
+      description = "Maximum number of patches to generate, defaults to unlimited")
+  private int limit = -1;
+
   public PatchCommand(PipelineRunner runner) {
     this.runner = runner;
   }
@@ -54,7 +60,15 @@ public class PatchCommand implements Callable<Integer> {
 
     checkInput();
 
-    runner.run(resultsFile, root, output);
+    PipelineConfig config =
+        PipelineConfig.builder()
+            .root(root)
+            .resultsFile(resultsFile)
+            .outputLocation(output)
+            .maximumPatches(limit)
+            .build();
+
+    runner.run(config);
 
     return 0;
   }
