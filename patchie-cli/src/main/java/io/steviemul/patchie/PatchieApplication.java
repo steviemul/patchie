@@ -26,7 +26,11 @@ public class PatchieApplication implements CommandLineRunner, ExitCodeGenerator 
 
   @Override
   public void run(String... args) {
-    exitCode = new CommandLine(patchCommand, factory).execute(args);
+
+    CommandLine commandLine =
+        new CommandLine(patchCommand, factory).setCaseInsensitiveEnumValuesAllowed(true);
+
+    exitCode = commandLine.execute(args);
   }
 
   @Override

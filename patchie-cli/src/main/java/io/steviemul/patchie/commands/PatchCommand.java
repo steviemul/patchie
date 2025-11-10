@@ -1,5 +1,6 @@
 package io.steviemul.patchie.commands;
 
+import io.steviemul.patchie.generator.constant.ChatProvider;
 import io.steviemul.patchie.pipeline.PipelineConfig;
 import io.steviemul.patchie.pipeline.PipelineRunner;
 import java.nio.file.Files;
@@ -51,6 +52,12 @@ public class PatchCommand implements Callable<Integer> {
       description = "Maximum number of patches to generate, defaults to unlimited")
   private int limit = -1;
 
+  @Option(
+      names = {"-p", "--provider"},
+      defaultValue = "OLLAMA",
+      description = "The chat provider to use, one of OLLAMA, OPENAI, GEMINI, ANTHROPIC")
+  private ChatProvider provider;
+
   public PatchCommand(PipelineRunner runner) {
     this.runner = runner;
   }
@@ -66,6 +73,7 @@ public class PatchCommand implements Callable<Integer> {
             .resultsFile(resultsFile)
             .outputLocation(output)
             .maximumPatches(limit)
+            .chatProvider(provider)
             .build();
 
     runner.run(config);

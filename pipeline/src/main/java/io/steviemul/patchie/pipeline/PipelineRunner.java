@@ -2,6 +2,7 @@ package io.steviemul.patchie.pipeline;
 
 import io.steviemul.patchie.context.AggregatedContext;
 import io.steviemul.patchie.generator.PatchGenerator;
+import io.steviemul.patchie.generator.config.ChatClientFactory;
 import io.steviemul.patchie.parser.SarifContextProvider;
 import io.steviemul.patchie.resolver.CodeContextProvider;
 import java.util.List;
@@ -10,6 +11,7 @@ import java.util.concurrent.Future;
 import java.util.stream.Stream;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -17,9 +19,13 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class PipelineRunner {
 
-  private final PatchGenerator patchGenerator;
+  private final ChatClientFactory chatClientFactory;
 
   public void run(PipelineConfig config) {
+
+    ChatClient chatClient = chatClientFactory.getChatClient(config.getChatProvider());
+
+    PatchGenerator patchGenerator = new PatchGenerator(chatClient);
 
     log.info("Reading results file {}", config.getResultsFile());
 

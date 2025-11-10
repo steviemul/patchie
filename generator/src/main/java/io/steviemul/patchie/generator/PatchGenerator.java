@@ -12,11 +12,8 @@ import java.util.concurrent.Future;
 import java.util.concurrent.atomic.AtomicInteger;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.ai.chat.client.ChatClient;
-import org.springframework.ai.chat.model.ChatModel;
 import org.springframework.ai.chat.prompt.PromptTemplate;
-import org.springframework.stereotype.Service;
 
-@Service
 @Slf4j
 public class PatchGenerator {
 
@@ -32,8 +29,8 @@ public class PatchGenerator {
 
   private final ExecutorService executor = Executors.newFixedThreadPool(2);
 
-  public PatchGenerator(ChatModel chatModel) {
-    chatClient = ChatClient.builder(chatModel).build();
+  public PatchGenerator(ChatClient chatClient) {
+    this.chatClient = chatClient;
 
     codeFixPrompt = TemplateReader.getCodeFixTemplate();
   }
